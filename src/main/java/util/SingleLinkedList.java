@@ -25,6 +25,7 @@ public class SingleLinkedList<T> {
         if (head == null) return null;
         T val = head.val;
         head = head.next;
+        size--;
         return val;
     }
 

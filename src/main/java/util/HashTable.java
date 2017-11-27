@@ -2,13 +2,15 @@ package util;
 
 import static java.lang.Math.abs;
 
-public class Hashmap<K, V> {
+public class HashTable<K, V> {
 
     private HashNode<K, V>[] values;
     private int size;
+    private int collisions;
 
-    public Hashmap(int capacity) {
+    public HashTable(int capacity) {
         this.size = 0;
+        this.collisions = 0;
         int cap = Integer.highestOneBit(capacity) << 1;
         //noinspection unchecked
         this.values = (HashNode<K, V>[]) new HashNode[cap];
@@ -16,22 +18,28 @@ public class Hashmap<K, V> {
 
     public boolean add(K key, V val) {
         int hash = abs(key.hashCode());
+        int h1 = h1(hash);
+        int h2 = h2(hash);
         int m = values.length;
         for (int i = 0; i < m; i++) {
-            int j = probe(hash, i);
+            int j = probe(h1, h2, i);
             if (values[j] == null) {
                 values[j] = new HashNode<>(key, val);
+                size++;
                 return true;
             }
+            collisions++;
         }
         return false; // no more room
     }
 
     public V get(K key) {
         int hash = abs(key.hashCode());
+        int h1 = h1(hash);
+        int h2 = h2(hash);
         int m = values.length;
         for (int i = 0; i < m; i++) {
-            int j = probe(hash, i);
+            int j = probe(h1, h2, i);
             if (values[j] == null) return null;
             if (values[j].key.equals(key)) return values[j].val;
         }
@@ -42,8 +50,20 @@ public class Hashmap<K, V> {
         return size;
     }
 
-    private int probe(int hash, int i) {
-        return (hash + i) % values.length;
+    public int collisions() {
+        return collisions;
+    }
+
+    private int h1(int hash) {
+        return abs(hash) % 17;
+    }
+
+    private int h2(int hash) {
+        return (2*abs(hash)+1) % values.length;
+    }
+
+    private int probe(int h1, int h2, int i) {
+        return (h1 + i*h2) % values.length;
     }
 
     private static class HashNode<K, V> {
@@ -54,26 +74,5 @@ public class Hashmap<K, V> {
             this.key = key;
             this.val = val;
         }
-    }
-
-    public static void main(String[] args) {
-        Hashmap<String, String> map = new Hashmap<>(10);
-        map.add("Sigrid", "digriS");
-        map.add("Julie", "eiluJ");
-        map.add("Kygo", "ogyK");
-        map.add("Hallo","ollaH");
-        map.add("Sigri", "igriS");
-        map.add("Juli", "iluJ");
-        map.add("Kyg", "gyK");
-        map.add("Hall","llaH");
-
-        System.out.println(map.get("Sigrid"));
-        System.out.println(map.get("Julie"));
-        System.out.println(map.get("Kygo"));
-        System.out.println(map.get("Hallo"));
-        System.out.println(map.get("Sigri"));
-        System.out.println(map.get("Juli"));
-        System.out.println(map.get("Kyg"));
-        System.out.println(map.get("Hall"));
     }
 }

@@ -36,10 +36,14 @@ public class Sorter {
 
     public static void bubbleSort(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
-            int j = i;
-            while (j < arr.length-1 && arr[j] > arr[j+1]) {
-                swap(arr, j, ++j);
+            boolean changed = false;
+            for (int j = 0; j < arr.length-1-i; j++) {
+                if (arr[j] > arr[j+1]) {
+                    swap(arr, j, j+1);
+                    changed = true;
+                }
             }
+            if (!changed) return; // sorted
         }
     }
 
@@ -100,7 +104,7 @@ public class Sorter {
         return minI;
     }
 
-    private static boolean isSorted(int[] arr) {
+    public static boolean isSorted(int[] arr) {
         for (int i = 1; i < arr.length; i++) {
             if (arr[i] < arr[i-1]) return false;
         }
