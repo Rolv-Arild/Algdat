@@ -5,17 +5,18 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class BinaryHeapTest {
+    private final Integer[] testNumbers = new Integer[]{1, 9, 2, 8, 3, 7, 4, 6, 0};
 
-    private Integer[] testNumbers = new Integer[]{1, 9, 2, 8, 3, 7, 4, 6, 0};
     private Integer[] sorted;
 
-
     private BinaryHeap<Integer> heap1;
-    private BinaryHeap<Integer> heap2;
 
+    private BinaryHeap<Integer> heap2;
     @Before
     public void setUp() throws Exception {
         sorted = Arrays.copyOf(testNumbers, testNumbers.length);
@@ -36,8 +37,8 @@ public class BinaryHeapTest {
     @Test
     public void poll() throws Exception {
         for (Integer integer : sorted) {
-            assertTrue(integer.intValue() == heap1.poll());
-            assertTrue(integer.intValue() == heap2.poll());
+            assertEquals(integer, heap1.poll());
+            assertEquals(integer, heap2.poll());
         }
     }
 
@@ -50,7 +51,14 @@ public class BinaryHeapTest {
         Arrays.sort(sorted);
 
         for (Integer integer : sorted) {
-            assertTrue(integer.intValue() == heap1.poll());
-            assertTrue(integer.intValue() == heap2.poll());
-        }    }
+            assertEquals(integer, heap1.poll());
+            assertEquals(integer, heap2.poll());
+        }
+    }
+
+    @Test
+    public void isEmpty() throws Exception {
+        assertFalse(heap1.isEmpty());
+        assertFalse(heap2.isEmpty());
+    }
 }

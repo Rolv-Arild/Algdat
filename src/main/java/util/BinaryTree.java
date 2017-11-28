@@ -16,13 +16,13 @@ public class BinaryTree<T extends Comparable<T>> {
         return size;
     }
 
-    public int depth() {
-        return depth(root, 0);
+    public int height() {
+        return root == null ? 0 : height(root, 1);
     }
 
-    private int depth(BiNode n, int current) {
+    private int height(BiNode n, int current) {
         if (n == null || n.isLeaf()) return current;
-        return max(depth(n.left, current+1), depth(n.right, current+1));
+        return max(height(n.left, current+1), height(n.right, current+1));
     }
 
     public boolean isFull() {

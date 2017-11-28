@@ -66,11 +66,10 @@ public class BinaryHeap<T extends Comparable<T>> {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void siftDown(int i) {
         int m = leftChild(i);
         if (m < size) {
-            int h = m + 1; // right child
+            int h = rightChild(i);
             if (h < size && get(h).compareTo(get(m)) < 0) m = h;
             // m is now the index of the smallest child
             if (get(m).compareTo(get(i)) < 0) {
@@ -86,25 +85,7 @@ public class BinaryHeap<T extends Comparable<T>> {
         set(m, temp);
     }
 
-
-    public static void main(String[] args) {
-        BinaryHeap<Integer> heap = new BinaryHeap<>();
-        heap.add(1);
-        heap.add(9);
-        heap.add(2);
-        heap.add(8);
-        heap.add(3);
-        heap.add(7);
-        heap.add(4);
-        heap.add(6);
-        heap.add(0);
-        heap.add(5);
-        while (!heap.isEmpty()) {
-            System.out.println(heap.poll());
-        }
-    }
-
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return size == 0;
     }
 }

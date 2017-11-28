@@ -44,9 +44,9 @@ public class BinaryTreeTest {
     }
 
     @Test
-    public void depth() throws Exception {
-        assertEquals(8, tree1.depth());
-        assertEquals(2, tree2.depth());
+    public void height() throws Exception {
+        assertEquals(9, tree1.height());
+        assertEquals(3, tree2.height());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class BinaryTreeTest {
     public void add() throws Exception {
         tree2.add(0);
         assertFalse(tree2.isFull());
-        assertTrue(tree2.depth() > 2);
+        assertTrue(tree2.height() > 2);
         assertEquals(8,tree2.size());
     }
 

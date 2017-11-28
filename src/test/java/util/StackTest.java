@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class StackTest {
 
@@ -33,4 +34,8 @@ public class StackTest {
         assertEquals(new Integer(9), stack.poll());
     }
 
+    @Test
+    public void isEmpty() throws Exception {
+        assertTrue(!stack.isEmpty());
+    }
 }
